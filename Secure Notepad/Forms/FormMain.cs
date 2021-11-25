@@ -15,6 +15,9 @@ namespace SecureNotepad
 
         public Document CurrentDocument;
 
+        public string lastSearchText;
+        public bool lastSearchRegex;
+
         public FormMain()
         {
             InitializeComponent();
@@ -243,6 +246,104 @@ namespace SecureNotepad
                 textBoxMain.Text = textBoxMain.Text.Remove(textBoxMain.SelectionStart, textBoxMain.SelectionLength);
             }
         }
+
+        private void ToolStripMenuItemEditFind_Click(object sender, EventArgs e)
+        {
+
+            FormFind lForm;
+
+            lForm = new FormFind();
+            lForm.setModeFind();
+
+            lForm.OldText = textBoxMain.Text;
+            lForm.OldPosition = textBoxMain.SelectionStart;
+
+            this.lastSearchText = null;
+            this.lastSearchRegex = false;
+
+            if (lForm.ShowDialog() == DialogResult.OK)
+            {
+                
+                if (lForm.NewPosition > -1)
+                {
+                    textBoxMain.Select(lForm.NewPosition, 0);
+
+                    this.lastSearchText = lForm.SearchText;
+                    this.lastSearchRegex = lForm.SearchRegex;
+
+                }
+                else if (!string.IsNullOrEmpty(lForm.NewText))
+                {
+                    textBoxMain.Text = lForm.NewText;
+                }
+
+            }
+
+        }
+
+        private void ToolStripMenuItemEditReplace_Click(object sender, EventArgs e)
+        {
+            FormFind lForm;
+
+            lForm = new FormFind();
+            lForm.setModeReplace();
+
+            lForm.OldText = textBoxMain.Text;
+            lForm.OldPosition = textBoxMain.SelectionStart;
+
+            this.lastSearchText = null;
+            this.lastSearchRegex = false;
+
+            if (lForm.ShowDialog() == DialogResult.OK)
+            {
+
+                if (lForm.NewPosition > -1)
+                {
+                    textBoxMain.Select(lForm.NewPosition, 0);
+
+                    this.lastSearchText = lForm.SearchText;
+                    this.lastSearchRegex = lForm.SearchRegex;
+
+                }
+                else if (!string.IsNullOrEmpty(lForm.NewText))
+                {
+                    textBoxMain.Text = lForm.NewText;
+                }
+
+            }
+
+
+        }
+
+        private void ToolStripMenuItemEditFindNext_Click(object sender, EventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(this.lastSearchText))
+            {
+
+                FormFind lForm;
+
+                lForm = new FormFind();
+                lForm.setModeFind();
+
+                lForm.OldText = textBoxMain.Text;
+                lForm.OldPosition = textBoxMain.SelectionStart;
+
+                lForm.Process();
+
+                if (lForm.NewPosition > -1)
+                {
+                    textBoxMain.Select(lForm.NewPosition, 0);
+                }
+                else if (!string.IsNullOrEmpty(lForm.NewText))
+                {
+                    textBoxMain.Text = lForm.NewText;
+                }
+
+            }
+
+        }
+
     }
 
 }
