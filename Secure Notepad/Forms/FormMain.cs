@@ -17,6 +17,7 @@ namespace SecureNotepad
 
         public string lastSearchText;
         public bool lastSearchRegex;
+        public bool lastSearchIgnoreCase;
 
         public FormMain()
         {
@@ -260,6 +261,7 @@ namespace SecureNotepad
 
             this.lastSearchText = null;
             this.lastSearchRegex = false;
+            this.lastSearchIgnoreCase = false;
 
             if (lForm.ShowDialog() == DialogResult.OK)
             {
@@ -270,6 +272,7 @@ namespace SecureNotepad
 
                     this.lastSearchText = lForm.SearchText;
                     this.lastSearchRegex = lForm.SearchRegex;
+                    this.lastSearchIgnoreCase = lForm.SearchIgnoreCase;
 
                 }
                 else if (!string.IsNullOrEmpty(lForm.NewText))
@@ -293,6 +296,7 @@ namespace SecureNotepad
 
             this.lastSearchText = null;
             this.lastSearchRegex = false;
+            this.lastSearchIgnoreCase = false;
 
             if (lForm.ShowDialog() == DialogResult.OK)
             {
@@ -303,6 +307,7 @@ namespace SecureNotepad
 
                     this.lastSearchText = lForm.SearchText;
                     this.lastSearchRegex = lForm.SearchRegex;
+                    this.lastSearchIgnoreCase = lForm.SearchIgnoreCase;
 
                 }
                 else if (!string.IsNullOrEmpty(lForm.NewText))
@@ -328,12 +333,22 @@ namespace SecureNotepad
 
                 lForm.OldText = textBoxMain.Text;
                 lForm.OldPosition = textBoxMain.SelectionStart;
+                
+                lForm.SearchText = this.lastSearchText;
+                lForm.SearchRegex = this.lastSearchRegex;
+                lForm.SearchIgnoreCase = this.lastSearchIgnoreCase;
 
                 lForm.Process();
 
                 if (lForm.NewPosition > -1)
                 {
+                    
                     textBoxMain.Select(lForm.NewPosition, 0);
+                    
+                    this.lastSearchText = lForm.SearchText;
+                    this.lastSearchRegex = lForm.SearchRegex;
+                    this.lastSearchIgnoreCase = lForm.SearchIgnoreCase;
+
                 }
                 else if (!string.IsNullOrEmpty(lForm.NewText))
                 {

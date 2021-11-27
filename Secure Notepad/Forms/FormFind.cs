@@ -42,6 +42,17 @@ namespace SecureNotepad
             }
         }
 
+        public bool SearchIgnoreCase
+        {
+            get
+            {
+                return this.checkBoxIgnoreCase.Checked;
+            }
+            set
+            {
+                this.checkBoxIgnoreCase.Checked = value;
+            }
+        }
 
         public FormFind()
         {
@@ -79,23 +90,52 @@ namespace SecureNotepad
         public void Process()
         {
 
+            System.Text.RegularExpressions.Regex regex;
+            System.Text.RegularExpressions.RegexOptions options;
+            string find;
+            string replacement;
+
+            // default
+            this.NewText = null;
+            this.NewPosition = -1;
+
+            // options
+            options = 0;
+            if (checkBoxIgnoreCase.Checked)
+            {
+                options = options | System.Text.RegularExpressions.RegexOptions.IgnoreCase;
+            }
+            
+            // find
+            find = checkBoxRegex.Checked ? this.textBoxFind.Text : System.Text.RegularExpressions.Regex.Escape(this.textBoxFind.Text);
+
+            // replacement
+            replacement = null;
             if (this.checkBoxReplace.Checked)
             {
+                replacement = checkBoxRegex.Checked ? this.textBoxReplace.Text.Replace("$", "$$") : this.textBoxReplace.Text;
+            }
 
-                this.NewText = this.OldText;
-                this.NewText = this.NewText.Replace(this.textBoxFind.Text, this.textBoxReplace.Text);
+            // prepare
+            regex = new System.Text.RegularExpressions.Regex(find, options);
+
+            // process
+            if (!string.IsNullOrEmpty(replacement))
+            {
                 this.NewPosition = -1;
-
+                this.NewText = regex.Replace(this.OldText, replacement);
             }
             else
             {
 
+                System.Text.RegularExpressions.Match lMatch;
+
+                lMatch = regex.Match(this.OldText, this.OldPosition+1);
+
+                this.NewPosition = lMatch.Index;
                 this.NewText = null;
 
-                this.NewPosition = this.OldText.IndexOf(this.textBoxFind.Text, this.OldPosition);
-
             }
-
             
         }
 

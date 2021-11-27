@@ -29,6 +29,7 @@ namespace SecureNotepad
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormFind));
             this.textBoxFind = new System.Windows.Forms.TextBox();
             this.buttonFind = new System.Windows.Forms.Button();
             this.checkBoxRegex = new System.Windows.Forms.CheckBox();
@@ -36,6 +37,7 @@ namespace SecureNotepad
             this.labelFind = new System.Windows.Forms.Label();
             this.checkBoxReplace = new System.Windows.Forms.CheckBox();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.checkBoxIgnoreCase = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBoxFind
@@ -107,6 +109,16 @@ namespace SecureNotepad
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
+            // checkBoxIgnoreCase
+            // 
+            this.checkBoxIgnoreCase.AutoSize = true;
+            this.checkBoxIgnoreCase.Location = new System.Drawing.Point(354, 303);
+            this.checkBoxIgnoreCase.Name = "checkBoxIgnoreCase";
+            this.checkBoxIgnoreCase.Size = new System.Drawing.Size(200, 36);
+            this.checkBoxIgnoreCase.TabIndex = 6;
+            this.checkBoxIgnoreCase.Text = "Ignore case";
+            this.checkBoxIgnoreCase.UseVisualStyleBackColor = true;
+            // 
             // FormFind
             // 
             this.AcceptButton = this.buttonFind;
@@ -114,6 +126,7 @@ namespace SecureNotepad
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(1179, 377);
+            this.Controls.Add(this.checkBoxIgnoreCase);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.checkBoxReplace);
             this.Controls.Add(this.labelFind);
@@ -122,6 +135,7 @@ namespace SecureNotepad
             this.Controls.Add(this.buttonFind);
             this.Controls.Add(this.textBoxFind);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -144,5 +158,6 @@ namespace SecureNotepad
         private System.Windows.Forms.Label labelFind;
         private System.Windows.Forms.CheckBox checkBoxReplace;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.CheckBox checkBoxIgnoreCase;
     }
 }
